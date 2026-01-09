@@ -19,6 +19,8 @@ app.use(cors({
     'http://localhost:8080',
     process.env.FRONTEND_URL || '',
     /\.onrender\.com$/, // Allow all Render frontend URLs
+    /\.vercel\.app$/, // Allow all Vercel frontend URLs
+    'https://saltier.vercel.app', // Your specific Vercel URL
   ].filter(Boolean),
   credentials: true,
 }));
