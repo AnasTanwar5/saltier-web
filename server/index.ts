@@ -14,7 +14,14 @@ const PORT = process.env.PORT || 3001;
 connectDB();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:8080',
+    process.env.FRONTEND_URL || '',
+    /\.onrender\.com$/, // Allow all Render frontend URLs
+  ].filter(Boolean),
+  credentials: true,
+}));
 app.use(express.json({ limit: '10mb' })); // Increase limit for base64 images
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
