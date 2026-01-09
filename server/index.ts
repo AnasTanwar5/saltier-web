@@ -34,6 +34,20 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
+// Root route - helpful message
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Saltier API Server',
+    status: 'running',
+    endpoints: {
+      health: '/api/health',
+      appetizers: '/api/appetizers',
+      coupons: '/api/coupons'
+    },
+    note: 'This is the backend API. Please access the frontend URL for the web application.'
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
