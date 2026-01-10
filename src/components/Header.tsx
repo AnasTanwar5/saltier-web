@@ -11,11 +11,8 @@ const Header = () => {
           </div>
           <div className="flex flex-col">
             <h1 className="font-serif text-2xl md:text-3xl font-semibold text-wine tracking-wide transition-colors duration-300 group-hover:text-wine-light leading-none">
-              Saltier
+              Saltire España
             </h1>
-            <span className="text-[10px] tracking-[0.25em] text-muted-foreground uppercase font-medium">
-              By Espana
-            </span>
           </div>
         </Link>
         

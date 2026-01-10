@@ -15,8 +15,7 @@ const CouponTicket = forwardRef<HTMLDivElement, CouponTicketProps>(({ coupon }, 
     >
       {/* Header */}
       <div className="text-center mb-6">
-        <h2 className="font-serif text-3xl font-bold text-wine mb-1">Saltier</h2>
-        <p className="text-xs tracking-widest text-charcoal/70 uppercase">By Espana</p>
+        <h2 className="font-serif text-3xl font-bold text-wine mb-1">Saltire España</h2>
       </div>
       
       {/* Decorative border */}

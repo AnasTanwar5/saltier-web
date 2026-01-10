@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="bg-secondary/50 border-t border-border py-8 px-4">
       <div className="container max-w-4xl mx-auto text-center">
         <h4 className="font-serif text-lg text-foreground mb-1">
-        A project by Espana
+        Saltire España
         </h4>
         <p className="text-sm text-muted-foreground mb-4">
           Learning the art of hospitality, one dish at a time
