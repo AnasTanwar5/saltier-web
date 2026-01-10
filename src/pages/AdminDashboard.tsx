@@ -200,8 +200,8 @@ const AdminDashboard = () => {
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) {
-      alert("Image size should be less than 5MB");
+    if (file.size > 1 * 1024 * 1024) {
+      alert("Image size should be less than 1MB");
       return;
     }
 
@@ -445,7 +445,7 @@ const AdminDashboard = () => {
                                 Click to upload image
                               </p>
                               <p className="text-xs text-muted-foreground">
-                                Max 500KB recommended
+                                Max 1MB
                               </p>
                             </div>
                           )}
