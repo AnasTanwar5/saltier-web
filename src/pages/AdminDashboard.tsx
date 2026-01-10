@@ -93,7 +93,16 @@ const AdminDashboard = () => {
     const excelData: (string | number)[][] = [];
     
     // Header row
-    excelData.push(["Coupon Code", "Appetizer Name", "Quantity", "Price (₹)", "Total (₹)"]);
+    excelData.push([
+      "Coupon Code", 
+      "User Type", 
+      "Name", 
+      "Roll Number", 
+      "Appetizer Name", 
+      "Quantity", 
+      "Price (₹)", 
+      "Total (₹)"
+    ]);
     
     coupons.forEach((coupon) => {
       const couponTotal = coupon.items.reduce(
@@ -105,6 +114,9 @@ const AdminDashboard = () => {
         const itemTotal = (item.appetizer.price || 0) * item.quantity;
         excelData.push([
           index === 0 ? coupon.code : "", // Only show code on first row
+          index === 0 ? (coupon.userType || "-") : "", // User type on first row
+          index === 0 ? (coupon.userName || "-") : "", // Name on first row
+          index === 0 ? (coupon.rollNo || "-") : "", // Roll number on first row
           item.appetizer.name,
           item.quantity,
           item.appetizer.price || 0,
@@ -122,6 +134,9 @@ const AdminDashboard = () => {
     // Set column widths
     ws["!cols"] = [
       { wch: 20 }, // Coupon Code
+      { wch: 12 }, // User Type
+      { wch: 25 }, // Name
+      { wch: 15 }, // Roll Number
       { wch: 30 }, // Appetizer Name
       { wch: 10 }, // Quantity
       { wch: 12 }, // Price
@@ -518,6 +533,9 @@ const AdminDashboard = () => {
                   <TableHeader>
                     <TableRow className="border-border hover:bg-transparent">
                       <TableHead className="font-serif font-semibold">Code</TableHead>
+                      <TableHead className="font-serif font-semibold">User Type</TableHead>
+                      <TableHead className="font-serif font-semibold">Name</TableHead>
+                      <TableHead className="font-serif font-semibold">Roll No</TableHead>
                       <TableHead className="font-serif font-semibold">Items</TableHead>
                       <TableHead className="font-serif font-semibold">Date & Time</TableHead>
                       <TableHead className="font-serif font-semibold text-right">Actions</TableHead>
@@ -526,15 +544,26 @@ const AdminDashboard = () => {
                   <TableBody>
                     {filteredCoupons.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                        <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
                           No coupons generated yet
                         </TableCell>
                       </TableRow>
                     ) : (
                       filteredCoupons.map((coupon) => (
-                        <TableRow key={coupon.id} className="border-border">
+                        <TableRow key={coupon._id || coupon.id} className="border-border">
                           <TableCell className="font-mono font-semibold text-wine">
                             {coupon.code}
+                          </TableCell>
+                          <TableCell>
+                            <span className="text-sm capitalize">
+                              {coupon.userType || "-"}
+                            </span>
+                          </TableCell>
+                          <TableCell className="font-medium">
+                            {coupon.userName || "-"}
+                          </TableCell>
+                          <TableCell>
+                            {coupon.rollNo || "-"}
                           </TableCell>
                           <TableCell>
                             <div className="space-y-1">
@@ -553,7 +582,7 @@ const AdminDashboard = () => {
                             <Button
                               variant="ghost"
                               size="icon"
-                              onClick={() => handleDeleteCoupon(coupon.id)}
+                              onClick={() => handleDeleteCoupon(coupon._id || coupon.id || '')}
                               className="h-8 w-8 hover:bg-destructive/10 hover:text-destructive"
                             >
                               <Trash2 className="h-4 w-4" />
