@@ -98,3 +98,4 @@ The application has been migrated from localStorage to MongoDB:
 
 See `MONGODB_SETUP.md` for detailed troubleshooting guide.
 
+

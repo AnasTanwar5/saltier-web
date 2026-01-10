@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AppetizerCard from "@/components/AppetizerCard";
+import UserInfoDialog, { UserInfo } from "@/components/UserInfoDialog";
 import { getAppetizers, Appetizer, OrderItem } from "@/lib/data";
 import { ShoppingBag, Sparkles } from "lucide-react";
 import heroImage from "@/assets/hero-appetizers.jpg";
@@ -13,6 +14,7 @@ const Index = () => {
   const [appetizers, setAppetizers] = useState<Appetizer[]>([]);
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
+  const [showUserDialog, setShowUserDialog] = useState(false);
 
   useEffect(() => {
     const fetchAppetizers = async () => {
@@ -51,9 +53,16 @@ const Index = () => {
 
   const handleProceed = () => {
     if (selectedItems.length > 0) {
-      sessionStorage.setItem("selectedItems", JSON.stringify(selectedItems));
-      navigate("/ticket");
+      setShowUserDialog(true);
     }
+  };
+
+  const handleUserInfoSubmit = (userInfo: UserInfo) => {
+    // Store user info along with selected items
+    sessionStorage.setItem("selectedItems", JSON.stringify(selectedItems));
+    sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+    setShowUserDialog(false);
+    navigate("/ticket");
   };
 
   return (
@@ -149,6 +158,13 @@ const Index = () => {
 
       {/* Footer */}
       <Footer />
+
+      {/* User Info Dialog */}
+      <UserInfoDialog
+        open={showUserDialog}
+        onClose={() => setShowUserDialog(false)}
+        onProceed={handleUserInfoSubmit}
+      />
 
       {/* Fixed bottom bar */}
       {totalItems > 0 && (

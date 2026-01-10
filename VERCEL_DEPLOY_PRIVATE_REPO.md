@@ -186,3 +186,4 @@ VITE_API_URL=https://saltier-web.onrender.com/api
 - Verify environment variables are set
 - Make sure backend is running and accessible
 
+

@@ -23,12 +23,19 @@ const Ticket = () => {
       }
 
       const items: OrderItem[] = JSON.parse(storedItems);
+      const storedUserInfo = sessionStorage.getItem("userInfo");
+      const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+
       try {
         const savedCoupon = await saveCoupon({
           items,
+          userType: userInfo?.userType || undefined,
+          userName: userInfo?.name || undefined,
+          rollNo: userInfo?.rollNo || undefined,
         });
         setCoupon(savedCoupon);
         sessionStorage.removeItem("selectedItems");
+        sessionStorage.removeItem("userInfo");
         
         // Show success animation
         setTimeout(() => setShowSuccess(true), 300);
@@ -39,6 +46,9 @@ const Ticket = () => {
           id: crypto.randomUUID(),
           code: generateCouponCode(),
           items,
+          userType: userInfo?.userType,
+          userName: userInfo?.name,
+          rollNo: userInfo?.rollNo,
           createdAt: new Date(),
         };
         setCoupon(localCoupon);

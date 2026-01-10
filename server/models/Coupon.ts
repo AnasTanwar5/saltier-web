@@ -14,6 +14,9 @@ export interface IOrderItem {
 export interface ICoupon extends Document {
   code: string;
   items: IOrderItem[];
+  userType?: "student" | "staff";
+  userName?: string;
+  rollNo?: string;
   createdAt: Date;
 }
 
@@ -48,6 +51,19 @@ const CouponSchema: Schema = new Schema({
       message: 'Coupon must have at least one item',
     },
   },
+  userType: {
+    type: String,
+    enum: ["student", "staff"],
+    default: undefined,
+  },
+  userName: {
+    type: String,
+    default: "",
+  },
+  rollNo: {
+    type: String,
+    default: "",
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -57,4 +73,5 @@ const CouponSchema: Schema = new Schema({
 });
 
 export default mongoose.model<ICoupon>('Coupon', CouponSchema);
+
 

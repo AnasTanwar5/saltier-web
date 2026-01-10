@@ -82,6 +82,9 @@ export interface Coupon {
   id?: string;
   code: string;
   items: OrderItem[];
+  userType?: "student" | "staff";
+  userName?: string;
+  rollNo?: string;
   createdAt: Date | string;
 }
 
