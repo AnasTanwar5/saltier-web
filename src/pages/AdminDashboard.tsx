@@ -98,6 +98,7 @@ const AdminDashboard = () => {
       "User Type", 
       "Name", 
       "Roll Number", 
+      "Email",
       "Appetizer Name", 
       "Quantity", 
       "Price (₹)", 
@@ -117,6 +118,7 @@ const AdminDashboard = () => {
           index === 0 ? (coupon.userType || "-") : "", // User type on first row
           index === 0 ? (coupon.userName || "-") : "", // Name on first row
           index === 0 ? (coupon.rollNo || "-") : "", // Roll number on first row
+          index === 0 ? (coupon.email || "-") : "", // Email on first row
           item.appetizer.name,
           item.quantity,
           item.appetizer.price || 0,
@@ -137,6 +139,7 @@ const AdminDashboard = () => {
       { wch: 12 }, // User Type
       { wch: 25 }, // Name
       { wch: 15 }, // Roll Number
+      { wch: 30 }, // Email
       { wch: 30 }, // Appetizer Name
       { wch: 10 }, // Quantity
       { wch: 12 }, // Price

@@ -38,7 +38,7 @@ const CouponTicket = forwardRef<HTMLDivElement, CouponTicketProps>(({ coupon }, 
       <div className="border-t-2 border-dashed border-charcoal/20 my-6" />
       
       {/* User Information */}
-      {(coupon.userName || coupon.rollNo) && (
+      {(coupon.userName || coupon.rollNo || coupon.email) && (
         <div className="mb-6">
           <div className="bg-beige/30 rounded-lg p-4 border border-charcoal/10">
             <div className="space-y-2">
@@ -62,13 +62,23 @@ const CouponTicket = forwardRef<HTMLDivElement, CouponTicketProps>(({ coupon }, 
                   </span>
                 </div>
               )}
+              {coupon.email && (
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-charcoal/70 font-medium">
+                    Email:
+                  </span>
+                  <span className="text-sm text-charcoal font-semibold">
+                    {coupon.email}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>
       )}
       
       {/* Dashed divider */}
-      {(coupon.userName || coupon.rollNo) && (
+      {(coupon.userName || coupon.rollNo || coupon.email) && (
         <div className="border-t-2 border-dashed border-charcoal/20 my-6" />
       )}
       

@@ -15,12 +15,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { User, GraduationCap, Briefcase } from "lucide-react";
+import { User, GraduationCap, Briefcase, Mail } from "lucide-react";
 
 interface UserInfo {
   userType: "student" | "staff" | "";
   name: string;
   rollNo: string;
+  email: string;
 }
 
 interface UserInfoDialogProps {
@@ -34,6 +35,7 @@ const UserInfoDialog = ({ open, onClose, onProceed }: UserInfoDialogProps) => {
     userType: "",
     name: "",
     rollNo: "",
+    email: "",
   });
   const [errors, setErrors] = useState<Partial<UserInfo>>({});
 
@@ -52,6 +54,12 @@ const UserInfoDialog = ({ open, onClose, onProceed }: UserInfoDialogProps) => {
       newErrors.rollNo = "Roll number is required for students";
     }
 
+    if (!userInfo.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userInfo.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -60,13 +68,13 @@ const UserInfoDialog = ({ open, onClose, onProceed }: UserInfoDialogProps) => {
     if (validate()) {
       onProceed(userInfo);
       // Reset form
-      setUserInfo({ userType: "", name: "", rollNo: "" });
+      setUserInfo({ userType: "", name: "", rollNo: "", email: "" });
       setErrors({});
     }
   };
 
   const handleClose = () => {
-    setUserInfo({ userType: "", name: "", rollNo: "" });
+    setUserInfo({ userType: "", name: "", rollNo: "", email: "" });
     setErrors({});
     onClose();
   };
@@ -164,6 +172,29 @@ const UserInfoDialog = ({ open, onClose, onProceed }: UserInfoDialogProps) => {
             </div>
           )}
 
+          {/* Email Field */}
+          <div className="space-y-2">
+            <Label htmlFor="email" className="text-foreground font-medium">
+              Email <span className="text-destructive">*</span>
+            </Label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter email address"
+                value={userInfo.email}
+                onChange={(e) =>
+                  setUserInfo({ ...userInfo, email: e.target.value })
+                }
+                className={errors.email ? "border-destructive pl-10" : "pl-10"}
+              />
+            </div>
+            {errors.email && (
+              <p className="text-sm text-destructive">{errors.email}</p>
+            )}
+          </div>
+
           {/* Action Buttons */}
           <div className="flex gap-3 pt-4">
             <Button
@@ -188,4 +219,5 @@ const UserInfoDialog = ({ open, onClose, onProceed }: UserInfoDialogProps) => {
 
 export default UserInfoDialog;
 export type { UserInfo };
+
 

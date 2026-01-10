@@ -85,6 +85,7 @@ export interface Coupon {
   userType?: "student" | "staff";
   userName?: string;
   rollNo?: string;
+  email?: string;
   createdAt: Date | string;
 }
 

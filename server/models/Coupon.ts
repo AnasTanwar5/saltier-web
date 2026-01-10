@@ -17,6 +17,7 @@ export interface ICoupon extends Document {
   userType?: "student" | "staff";
   userName?: string;
   rollNo?: string;
+  email?: string;
   createdAt: Date;
 }
 
@@ -61,6 +62,10 @@ const CouponSchema: Schema = new Schema({
     default: "",
   },
   rollNo: {
+    type: String,
+    default: "",
+  },
+  email: {
     type: String,
     default: "",
   },

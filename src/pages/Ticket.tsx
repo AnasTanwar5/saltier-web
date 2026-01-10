@@ -32,6 +32,7 @@ const Ticket = () => {
           userType: userInfo?.userType || undefined,
           userName: userInfo?.name || undefined,
           rollNo: userInfo?.rollNo || undefined,
+          email: userInfo?.email || undefined,
         });
         setCoupon(savedCoupon);
         sessionStorage.removeItem("selectedItems");
@@ -49,6 +50,7 @@ const Ticket = () => {
           userType: userInfo?.userType,
           userName: userInfo?.name,
           rollNo: userInfo?.rollNo,
+          email: userInfo?.email,
           createdAt: new Date(),
         };
         setCoupon(localCoupon);

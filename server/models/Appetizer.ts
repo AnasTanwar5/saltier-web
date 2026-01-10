@@ -33,3 +33,4 @@ const AppetizerSchema: Schema = new Schema({
 export default mongoose.model<IAppetizer>('Appetizer', AppetizerSchema);
 
 
+
