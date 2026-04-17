@@ -2,8 +2,18 @@ import mongoose from 'mongoose';
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI || '');
-    
+    const mongoURI =
+      process.env.MONGO_URI ||
+      process.env.MONGODB_URI;
+
+    if (!mongoURI) {
+      throw new Error(
+        'MongoDB URI missing. Add MONGO_URI in Render Environment Variables.'
+      );
+    }
+
+    const conn = await mongoose.connect(mongoURI);
+
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
@@ -12,6 +22,3 @@ const connectDB = async () => {
 };
 
 export default connectDB;
-
-
-
