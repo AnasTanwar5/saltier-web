@@ -5,40 +5,59 @@ import connectDB from './config/db.js';
 import appetizerRoutes from './routes/appetizerRoutes.js';
 import couponRoutes from './routes/couponRoutes.js';
 
+// Load environment variables
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Connect to MongoDB
+// Connect to MongoDB using MONGO_URI
 connectDB();
+
+// Allowed frontend origins
+const allowedOrigins = [
+  'http://localhost:8080',
+  process.env.FRONTEND_URL,
+  'https://saltier.vercel.app'
+].filter(Boolean);
 
 // Middleware
 app.use(cors({
-  origin: [
-    'http://localhost:8080',
-    process.env.FRONTEND_URL || '',
-    /\.onrender\.com$/, // Allow all Render frontend URLs
-    /\.vercel\.app$/, // Allow all Vercel frontend URLs
-    'https://saltier.vercel.app', // Your specific Vercel URL
-  ].filter(Boolean),
+  origin: (origin, callback) => {
+    // allow requests with no origin (Postman/mobile apps)
+    if (!origin) return callback(null, true);
+
+    if (
+      allowedOrigins.includes(origin) ||
+      /\.onrender\.com$/.test(origin) ||
+      /\.vercel\.app$/.test(origin)
+    ) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('CORS not allowed'));
+  },
   credentials: true,
 }));
-app.use(express.json({ limit: '10mb' })); // Increase limit for base64 images
+
+app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Routes
 app.use('/api/appetizers', appetizerRoutes);
 app.use('/api/coupons', couponRoutes);
 
-// Health check
+// Health Check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server is running' });
+  res.status(200).json({
+    status: 'OK',
+    message: 'Server is running'
+  });
 });
 
-// Root route - helpful message
+// Root Route
 app.get('/', (req, res) => {
-  res.json({ 
+  res.status(200).json({
     message: 'Saltier API Server',
     status: 'running',
     endpoints: {
@@ -46,11 +65,11 @@ app.get('/', (req, res) => {
       appetizers: '/api/appetizers',
       coupons: '/api/coupons'
     },
-    note: 'This is the backend API. Please access the frontend URL for the web application.'
+    note: 'This is the backend API. Please use frontend URL for website.'
   });
 });
 
+// Start Server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
